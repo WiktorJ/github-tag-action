@@ -36,9 +36,10 @@ case "$log" in
     *#patch* ) new=$(semver bump patch $tag);;
     * ) new="none";;
 esac
-git config user.email "email" 
+echo ::setting user and email
+git config user.email "fake@email.com" 
 git config user.name "user"
-
+echo ::checking if new tag exists
 if [ "$new" != "none" ]; then
 	# prefix with 'v'
 	if $with_v
@@ -59,7 +60,7 @@ if [ "$new" != "none" ]; then
 	git tag -a -m "release: ${new}" $new $commit
 fi	
 
-
+echo ::pushing new tag
 git push origin :refs/tags/latest
 git tag -fa -m "latest release" latest $commit
 git push --follow-tag
